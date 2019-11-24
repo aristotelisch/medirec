@@ -1,7 +1,3 @@
-INSERT INTO "users" ("id","amka","created_at","email","first_name","last_name","password","role")
-VALUES
-(1,'dsadas323123',NULL,'telischristou@gmail.com','Telis','Christou','123456','patient');
 
-INSERT INTO "users" ("id","amka","created_at","email","first_name","last_name","password","role")
-VALUES
-(2,'dsadas32313435',NULL,'telischristou@gmail.com','Telis','Christou','123456','patient');
+INSERT INTO public.users (id, created_at, email, father_name, first_name, last_name, password, role) VALUES (1, '2019-11-24 19:39:12.000000', 'doc@example.com', 'Nikos', 'Spyros', '', '123456', 'doctor');
+INSERT INTO public.patients (id, amka, created_at, email, father_name, first_name, insurance_type, last_name, password, role, telephone) VALUES (1, '1234567899ABC', null, 'dev@example.com', 'Nikos', 'Telis', 'IKA', 'Christou', '123456', '', '2101234567');

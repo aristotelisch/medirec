@@ -1,34 +1,37 @@
 package christou.aristotelis.medirec.entities;
 
-import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.*;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Data
 @Table(name = "users")
-public class User {
+class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String firstName;
     private String lastName;
+    private String fatherName;
     private String role;
     private String email;
     private String password;
-    private String amka;
 
-    @OneToMany(mappedBy = "patient",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<Visit> visits = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Visit> patients = new ArrayList<>();
 
     @CreationTimestamp
-    private Instant created_at;
-
+    private Instant createdAt;
 }
