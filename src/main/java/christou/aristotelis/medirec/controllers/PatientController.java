@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/patients")
 public class PatientController {
 
-    private final PatientRepository patientRepository;
+  private final PatientRepository patientRepository;
 
-    public PatientController(PatientRepository patientRepository) {
-        this.patientRepository = patientRepository;
-    }
+  public PatientController(PatientRepository patientRepository) {
+    this.patientRepository = patientRepository;
+  }
 
-    @GetMapping("/greet")
-    public ResponseEntity<String> greet() {
-        return new ResponseEntity<>("Hello", HttpStatus.OK);
-    }
+  @GetMapping("/greet")
+  public ResponseEntity<String> greet() {
+    return new ResponseEntity<>("Hello", HttpStatus.OK);
+  }
 
-    @GetMapping("/")
-    public Iterable<Patient> getUsers() {
-        return patientRepository.findAll();
-    }
+  @GetMapping("/")
+  public Iterable<Patient> getUsers() {
+    return patientRepository.findAll();
+  }
 }

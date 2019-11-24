@@ -26,12 +26,15 @@ public class Patient {
   private String firstName;
   private String lastName;
   private String fatherName;
+  private Instant birthDate;
+  private Gender gender;
   private String role;
   private String email;
   private String telephone;
   private String insuranceType;
   private String password;
   private String amka;
+  private String notes;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
