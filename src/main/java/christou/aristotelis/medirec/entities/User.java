@@ -17,6 +17,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Data
 @Table(name = "users")
+public
 class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,7 +31,7 @@ class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Visit> patients = new ArrayList<>();
+    private List<Patient> patients = new ArrayList<>();
 
     @CreationTimestamp
     private Instant createdAt;
