@@ -1,8 +1,5 @@
 package christou.aristotelis.medirec.config;
 
-//import eu.happybit.konchris.koncrisbackend.security.CustomUserDetailsService;
-//import eu.happybit.konchris.koncrisbackend.security.JwtAuthenticationEntryPoint;
-//import eu.happybit.konchris.koncrisbackend.security.JwtAuthenticationFilter;
 import christou.aristotelis.medirec.security.CustomUserDetailsService;
 import christou.aristotelis.medirec.security.JwtAuthenticationEntryPoint;
 import christou.aristotelis.medirec.security.JwtAuthenticationFilter;
@@ -25,11 +22,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-  @Autowired
-  CustomUserDetailsService customUserDetailsService;
+  @Autowired CustomUserDetailsService customUserDetailsService;
 
-  @Autowired
-  JwtAuthenticationEntryPoint unauthorizedHandler;
+  @Autowired JwtAuthenticationEntryPoint unauthorizedHandler;
 
   @Bean
   JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -37,60 +32,62 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
-  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
+      throws Exception {
     authenticationManagerBuilder
-            .userDetailsService (customUserDetailsService)
-            .passwordEncoder (passwordEncoder());
+        .userDetailsService(customUserDetailsService)
+        .passwordEncoder(passwordEncoder());
   }
 
   @Bean(BeanIds.AUTHENTICATION_MANAGER)
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean ();
+    return super.authenticationManagerBean();
   }
 
   @Bean
   public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder ();
+    return new BCryptPasswordEncoder();
   }
 
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
-            .cors()
-              .and()
-            .csrf()
-              .disable ()
-            .exceptionHandling ()
-              .authenticationEntryPoint (unauthorizedHandler)
-              .and()
-            .sessionManagement ()
-              .sessionCreationPolicy (SessionCreationPolicy.STATELESS)
-              .and()
-            .authorizeRequests ()
-              .antMatchers ("/",
-                      "/favicon.ico",
-                      "/**/*.png",
-                      "/**/*.gif",
-                      "/**/*.svg",
-                      "/**/*.jpg",
-                      "/**/*.html",
-                      "/**/*.css",
-                      "/**/*.js")
-                      .permitAll()
-              .antMatchers("/api/auth/**")
-                .permitAll()
-              .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
-                .permitAll()
-              .antMatchers("/api/**")
-                .authenticated()
-              .antMatchers("/**")
-                .permitAll();
+        .cors()
+        .and()
+        .csrf()
+        .disable()
+        .exceptionHandling()
+        .authenticationEntryPoint(unauthorizedHandler)
+        .and()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .authorizeRequests()
+        .antMatchers(
+            "/",
+            "/favicon.ico",
+            "/**/*.png",
+            "/**/*.gif",
+            "/**/*.svg",
+            "/**/*.jpg",
+            "/**/*.html",
+            "/**/*.css",
+            "/**/*.js")
+        .permitAll()
+        .antMatchers("/api/auth/**")
+        .permitAll()
+        .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
+        .permitAll()
+        .antMatchers("/api/**")
+        .authenticated()
+        .antMatchers("/**")
+        .permitAll();
 
-//              .anyRequest ()
-//                .authenticated ();
+    //              .anyRequest ()
+    //                .authenticated ();
 
-    httpSecurity.addFilterBefore (jwtAuthenticationFilter (), UsernamePasswordAuthenticationFilter.class);
-
+    httpSecurity.addFilterBefore(
+        jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
   }
 }
