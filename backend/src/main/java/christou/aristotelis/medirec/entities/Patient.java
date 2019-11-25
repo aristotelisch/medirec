@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -28,7 +32,6 @@ public class Patient {
   private String fatherName;
   private Instant birthDate;
   private Gender gender;
-  private String role;
   private String email;
   private String telephone;
   private String insuranceType;
@@ -38,12 +41,15 @@ public class Patient {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
+  @JsonBackReference
   private User user;
 
   @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private List<LabFile> labFiles = new ArrayList<>();
 
   @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference
   private List<Visit> visits = new ArrayList<>();
 
   @CreationTimestamp private Instant createdAt;

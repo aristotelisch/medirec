@@ -1,3 +1,6 @@
+INSERT INTO roles (name) VALUES ('ROLE_USER');
+INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
+
 INSERT INTO public.users (id, created_at, email, father_name, first_name, last_name, password, role)
 VALUES (1, '2019-11-24 20:38:31.000000', 'dev@example.com', null, 'Telis', 'Christou', '123456', 'doctor')
 ON CONFLICT ON CONSTRAINT users_pkey

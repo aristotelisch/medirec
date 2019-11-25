@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,6 +29,7 @@ public class Visit {
 
   @ManyToOne
   @JoinColumn(name = "patient_id")
+  @JsonBackReference
   private Patient patient;
 
   private String symptoms;
@@ -36,6 +40,7 @@ public class Visit {
   private Double cost;
 
   @OneToMany(mappedBy = "visit", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonIgnore
   private List<LabFile> labFiles = new ArrayList<>();
 
   private Instant reexaminationAt;
